@@ -9,7 +9,7 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
-
+  
 var allowedUserHashes = map[string]interface{}{
 	"admin_admin": nil,
 	"johnd_foo":   nil,
