@@ -1,0 +1,87 @@
+version: "3.8"
+
+services:
+  frontend-kube:
+    container_name: frontend-kube
+    image: daramirezs/frontend-kube:1.0
+    environment:
+      - PORT
+      - ZIPKIN_URL
+      - TODOS_API_ADDRESS
+      - AUTH_API_ADDRESS
+    ports:
+      - '8040:8040'
+    depends_on:
+      - auth-kube
+      - todos-kube
+    network_mode: host
+
+  auth-kube:
+    container_name: auth-kube
+    image: daramirezs/auth-kube:latest
+    environment:
+      - JWT_SECRET
+      - USERS_API_ADDRESS
+      - AUTH_API_PORT
+      - ZIPKIN_URL
+    ports:
+      - '8050:8050'
+    depends_on:
+      - users-kube
+    network_mode: host
+
+  users-kube:
+    container_name: users-kube
+    image: daramirezs/users-kube:1.0
+    environment:
+      - JWT_SECRET
+      - SERVER_PORT
+    ports:
+      - '8045:8045'
+    network_mode: host
+  zipkin-server:
+    container_name: zipkin-server
+    image: openzipkin/zipkin
+    ports:
+      - '9411:9411'
+    network_mode: host
+
+  todos-kube:
+    container_name: todos-kube
+    image: daramirezs/todos-kube:1.0
+    ports:
+      - '8060:8060'
+    environment:
+      - REDIS_HOST
+      - REDIS_PORT
+      - REDIS_CHANNEL
+      - JWT_SECRET
+      - TODO_API_PORT
+      - ZIPKIN_URL
+    depends_on:
+      - redis-server
+      - users-kube
+    network_mode: host
+  
+  message-processor-kube:
+    container_name: message-processor-kube
+    image: daramirezs/message-processor-kube:1.0
+    build:
+      context: .
+    environment:
+      - REDIS_HOST
+      - REDIS_PORT
+      - REDIS_CHANNEL
+      - ZIPKIN_URL
+    depends_on:
+      - redis-server
+    network_mode: host
+  redis-server:
+    container_name: redis-server
+    image: redis:7.0-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host

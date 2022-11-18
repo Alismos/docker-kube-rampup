@@ -1,15 +1,15 @@
-# Download the todo-app repos and add Dockerfiles.
+# Download the todo-app repositories and add Dockerfiles.
 
 
-## Fork the repository in Github.
+## Fork the repository in GitHub.
 
 ![image](assets/images/fork_repository.png)
 
-## Clone the repository in you local machine. 
+## Clone the repository in your local machine. 
 ```
 $ git clone <\repository_url>
 ```
-## Create a Dockerfile to frontend service.
+## Create a Dockerfile for frontend service.
 
 ![image](assets/images/fronted_dockerfile.png)
 
@@ -79,7 +79,7 @@ $ sudo docker run -e REDIS_HOST="192.168.20.66" -e REDIS_PORT="6379" -e REDIS_CH
 
 * Docker account [logged in your shell](https://stackoverflow.com/questions/57108005/login-to-docker-hub-by-command-line) 
 
-[Docker](https://docs.docker.com/docker-hub/repos/) Hub repositories allow you share container images with your team, customers, or the Docker community at large.
+[Docker](https://docs.docker.com/docker-hub/repos/) Hub repositories allow you to share container images with your team, customers, or the Docker community at large.
 
 To push an image to Docker Hub, you must first name your local image using your Docker Hub username and the repository name that you created through Docker Hub on the web.
 ```
