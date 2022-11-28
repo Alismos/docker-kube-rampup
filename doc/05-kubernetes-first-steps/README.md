@@ -44,7 +44,9 @@ Namespace created:
 ![image](assets/images/namespace_created.png)
 
 Pods:
+
 ![image](assets/images/kubectl_get_pods.png)
 
 Services:
+
 ![image](assets/images/kubectl_get_service.png)
